@@ -5,7 +5,24 @@ info:
 servers:
   - url: http://localhost:8000
 paths:
-  /tasks:
+  projects:
+      post:
+          summary: Create a new Project
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Project'
+          responses:
+            '200':
+              description: The created new Project
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Project' 
+                
+  projects/{projectId}/tasks:
     get:
       summary: Retrieve all tasks
       responses:
@@ -17,6 +34,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Task'
+    
     post:
       summary: Create a new task
       requestBody:
@@ -32,7 +50,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Task'
-  /tasks/{taskId}:
+  projects/{projectId}/tasks/{taskId}:
     get:
       summary: Get a task by ID
       parameters:
@@ -102,3 +120,6 @@ components:
           type: string
         assignee:
           type: string
+         project:
+          type: string  
+          
